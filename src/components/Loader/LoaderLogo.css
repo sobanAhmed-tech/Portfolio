@@ -1,4 +1,37 @@
 .raw_logo {
-  height: 305;
-  width: 440;
+  height: 200px;
+  width: 500px;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* First name stroke animation */
+.logo-text-first {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: drawText 2.5s ease forwards, fillText 1s ease 2.5s forwards;
+}
+
+/* Last name stroke animation - slightly delayed */
+.logo-text-last {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: drawText 2.5s ease 0.5s forwards, fillText 1s ease 3s forwards;
+}
+
+@keyframes drawText {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fillText {
+  to {
+    fill: currentColor;
+    stroke-width: 0;
+  }
 }

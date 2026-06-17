@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./DegreeCard.css";
-import { Fade, Flip } from "react-reveal";
+import { Fade } from "react-reveal";
 
 class DegreeCard extends Component {
   render() {
@@ -8,26 +8,8 @@ class DegreeCard extends Component {
     const theme = this.props.theme;
     return (
       <div className="degree-card">
-        {degree.logo_path && (
-          <Flip left duration={2000}>
-            <div className="card-img">
-              <img
-                style={{
-                  maxWidth: "100%",
-                  maxHeight: "100%",
-                  transform: "scale(0.9)",
-                }}
-                src={require(`../../assets/images/${degree.logo_path}`)}
-                alt={degree.alt_name}
-              />
-            </div>
-          </Flip>
-        )}
         <Fade right duration={2000} distance="40px">
-          <div
-            className="card-body"
-            style={{ width: degree.logo_path ? "90%" : "100%" }}
-          >
+          <div className="card-body" style={{ width: "100%" }}>
             <div
               className="body-header"
               style={{ backgroundColor: theme.headerColor }}

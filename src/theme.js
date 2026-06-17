@@ -1,16 +1,16 @@
 // theme.js
 export const blueTheme = {
-  body: "#EDF9FE",
-  text: "#001C55",
-  expTxtColor: "#000a12",
-  highlight: "#A6E1FA",
-  dark: "#00072D",
-  secondaryText: "#7F8DAA",
+  body: "#FFFFFF",
+  text: "#000000",
+  expTxtColor: "#000000",
+  highlight: "#E9ECEF",
+  dark: "#000000",
+  secondaryText: "#6C757D",
   imageHighlight: "#0E6BA8",
   compImgHighlight: "#E6E6E6",
   jacketColor: "#0A2472",
-  headerColor: "#0E6BA877",
-  splashBg: "#001C55",
+  headerColor: "#E9ECEF77",
+  splashBg: "#0A2472",
 };
 
 export const brownTheme = {
@@ -154,17 +154,17 @@ export const yellowTheme = {
 };
 
 export const materialDarkTheme = {
-  body: "#263238",
-  text: "#aeaeae",
-  expTxtColor: "#000a12",
-  highlight: "#4f5b62",
-  dark: "#000a12",
-  secondaryText: "#aeaeae",
+  body: "#121212",
+  text: "#FFFFFF",
+  expTxtColor: "#FFFFFF",
+  highlight: "#2A2A2A",
+  dark: "#FFFFFF",
+  secondaryText: "#A0A0A0",
   imageHighlight: "#607d8b",
   compImgHighlight: "#E6E6E6",
   jacketColor: "#8eacbb",
-  headerColor: "#34515e",
-  splashBg: "#4f5b62",
+  headerColor: "#2A2A2A77",
+  splashBg: "#121212",
 };
 
 export const materialLightTheme = {

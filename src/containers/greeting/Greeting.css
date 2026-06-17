@@ -32,27 +32,49 @@
 
 .greeting-text {
   margin-top: 80px;
-  font-size: 70px;
+  font-size: 60px;
   line-height: 1.1;
   font-family: "Google Sans Bold";
 }
 
 .greeting-nickname {
-  font-size: 30px;
-  line-height: 0px;
+  font-size: 25px;
+  line-height: 1.2;
   font-family: "Google Sans Bold Italic";
 }
 
 .greeting-text-p {
-  font-size: 40px;
-  line-height: 40px;
+  font-size: 24px;
+  line-height: 1.5;
   margin-right: 40px;
   font-family: "Google Sans Medium";
+  margin-top: 15px;
 }
 
 .greeting-image-div > * {
   max-width: 100%;
   height: auto;
+}
+
+.greeting-profile-pic {
+  width: 480px;
+  height: 480px;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: block;
+  margin: 0 auto;
+}
+
+.greeting-profile-pic:hover {
+  transform: translateY(-10px) scale(1.03);
+}
+
+@media (max-width: 768px) {
+  .greeting-profile-pic {
+    width: 250px;
+    height: 250px;
+  }
 }
 
 /* Media Query */

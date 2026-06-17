@@ -3,192 +3,88 @@ import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import { Fade } from "react-reveal";
 import "./Resume.css";
-import myResumePdf from "../../assets/docs/Ashutosh_Hathidara_Resume_ML.pdf";
-import { Document, Page, pdfjs } from "react-pdf";
 import Button from "../../components/button/Button";
 import { greeting } from "../../portfolio";
 import TopButton from "../../components/topButton/TopButton";
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
-
 export default class ResumePage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pageWidth: null,
-      numPages: null,
-      currentPage: 1,
-      isLoading: true,
-      error: null,
-    };
-  }
-
-  componentDidMount() {
-    this.setPageWidth();
-    window.addEventListener("resize", this.setPageWidth);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.setPageWidth);
-  }
-
-  setPageWidth = () => {
-    const width = window.innerWidth;
-    let pageWidth;
-
-    if (width > 1200) {
-      pageWidth = 930;
-    } else if (width > 768) {
-      pageWidth = 700;
-    } else {
-      pageWidth = width * 0.9;
-    }
-
-    this.setState({ pageWidth });
-  };
-
-  onDocumentLoadSuccess = ({ numPages }) => {
-    this.setState({
-      numPages,
-      isLoading: false,
-      error: null,
-    });
-  };
-
-  onDocumentLoadError = (error) => {
-    console.error("Error loading PDF:", error);
-    this.setState({
-      error: "Failed to load resume. Please try again later.",
-      isLoading: false,
-    });
-  };
-
-  goToPreviousPage = () => {
-    this.setState((prevState) => ({
-      currentPage: Math.max(prevState.currentPage - 1, 1),
-    }));
-  };
-
-  goToNextPage = () => {
-    this.setState((prevState) => ({
-      currentPage: Math.min(prevState.currentPage + 1, prevState.numPages),
-    }));
-  };
-
   render() {
     const theme = this.props.theme;
-    const { pageWidth, numPages, currentPage, isLoading, error } = this.state;
+
+    // Convert Google Drive share link to direct embed URL
+    const fileIdMatch = greeting.resumeLink
+      ? greeting.resumeLink.match(/\/d\/(.+?)\//)
+      : null;
+    const fileId = fileIdMatch ? fileIdMatch[1] : null;
+    const embedLink = fileId
+      ? `https://drive.google.com/file/d/${fileId}/preview`
+      : "";
 
     return (
-      <div className="resume-main">
+      <div className="resume-main" style={{ backgroundColor: theme.body }}>
         <Header theme={theme} />
         <div className="resume-view">
           <Fade bottom duration={2000} distance="40px">
-            <div>
-              {/* Download Button */}
-              <div className="download-btn">
+            <div className="resume-header-section">
+              <h1 className="resume-title" style={{ color: theme.text }}>
+                My Resume
+              </h1>
+              <p
+                className="resume-subtitle"
+                style={{ color: theme.secondaryText }}
+              >
+                A summary of my education, work experience, skills, and
+                projects.
+              </p>
+
+              {/* Action Buttons */}
+              <div className="resume-actions">
                 <Button
-                  text="📃 Download Resume"
+                  text="📄 Download Resume"
                   newTab={true}
                   href={greeting.resumeLink}
                   theme={theme}
                 />
               </div>
-
-              {/* Loading State */}
-              {isLoading && !error && (
-                <div className="resume-loading">
-                  <div className="loading-spinner"></div>
-                  <p>Loading resume...</p>
-                </div>
-              )}
-
-              {/* Error State */}
-              {error && (
-                <div className="resume-error">
-                  <svg
-                    className="error-icon"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    width="48"
-                    height="48"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  <p>{error}</p>
-                  <button
-                    onClick={() => window.location.reload()}
-                    className="retry-btn"
-                    aria-label="Reload resume"
-                  >
-                    Try Again
-                  </button>
-                </div>
-              )}
-
-              {/* PDF Document */}
-              {!error && (
-                <div className="resume-page">
-                  <Document
-                    file={myResumePdf}
-                    onLoadSuccess={this.onDocumentLoadSuccess}
-                    onLoadError={this.onDocumentLoadError}
-                    loading={
-                      <div className="resume-loading">
-                        <div className="loading-spinner"></div>
-                        <p>Loading resume...</p>
-                      </div>
-                    }
-                  >
-                    {pageWidth && (
-                      <Page
-                        pageNumber={currentPage}
-                        width={pageWidth}
-                        loading={
-                          <div className="page-loading">
-                            <div className="loading-spinner"></div>
-                          </div>
-                        }
-                      />
-                    )}
-                  </Document>
-
-                  {/* Pagination Controls */}
-                  {numPages && numPages > 1 && (
-                    <div className="pagination-controls">
-                      <button
-                        onClick={this.goToPreviousPage}
-                        disabled={currentPage === 1}
-                        className="pagination-btn"
-                        aria-label="Previous page"
-                      >
-                        ← Previous
-                      </button>
-                      <span className="page-info" aria-live="polite">
-                        Page {currentPage} of {numPages}
-                      </span>
-                      <button
-                        onClick={this.goToNextPage}
-                        disabled={currentPage === numPages}
-                        className="pagination-btn"
-                        aria-label="Next page"
-                      >
-                        Next →
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
             </div>
           </Fade>
+
+          <Fade bottom duration={1500} distance="30px">
+            {embedLink ? (
+              <div className="resume-embed-wrapper">
+                <div
+                  className="resume-embed-card"
+                  style={{
+                    boxShadow: `0 8px 32px rgba(0, 0, 0, 0.12)`,
+                    borderColor: theme.highlight,
+                  }}
+                >
+                  <iframe
+                    src={embedLink}
+                    className="resume-iframe"
+                    title="Soban Ahmed Resume"
+                    allow="autoplay"
+                  ></iframe>
+                </div>
+              </div>
+            ) : (
+              <div
+                className="resume-message"
+                style={{
+                  color: theme.text,
+                  textAlign: "center",
+                  marginTop: "50px",
+                }}
+              >
+                <p>
+                  Add your Google Drive PDF link to <code>resumeLink</code> in{" "}
+                  <code>src/portfolio.js</code> to display your resume here.
+                </p>
+              </div>
+            )}
+          </Fade>
         </div>
-        <Footer theme={theme} onToggle={this.props.onToggle}/>
+        <Footer theme={theme} />
         <TopButton theme={theme} />
       </div>
     );
